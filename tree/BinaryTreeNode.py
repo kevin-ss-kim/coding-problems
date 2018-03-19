@@ -13,11 +13,11 @@ class BinaryTreeNode(object):
         self.right = BinaryTreeNode(value)
         return self.right
 
-def generateBST(sortedArray):
-    length = len(sortedArray)
-    if length > 0:
-        pivot = len(sortedArray) / 2
-        node = BinaryTreeNode(pivot)
-        leftNode = generateBST(sorted[0:pivot])
-    else:
+def generateBST(array, start, end):
+    if start > end:
         return None
+    mid = (start + end) / 2
+    node = BinaryTreeNode(array[mid])
+    node.left = generateBST(array, start, mid - 1)
+    node.right = generateBST(array, mid + 1, end)
+    return node
