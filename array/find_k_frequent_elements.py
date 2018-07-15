@@ -2,13 +2,15 @@ def find_top_k_frequent_element(nums, k):
     elementToIndex = dict()
     indexToElement = dict()
     currentIndex = 0
-    for index, value in enumerate(nums):
+    for value in nums:
         if value in elementToIndex:
+            print(str(value) + " already found")
             nums[elementToIndex[value]] += 1
             # Bubble up and update index
             bubbleUpIndex = elementToIndex[value]
             parentIndex = (bubbleUpIndex - 1) / 2
-            while (parentIndex >= 0) and (nums[bubbleUpIndex] >= nums[parentIndex]):
+            while (parentIndex >= 0) and (nums[bubbleUpIndex] > nums[parentIndex]):
+                print("bubbling up index from " + str(bubbleUpIndex) + " to parent index " + str(parentIndex))
                 # Bubble up and set dictionary
                 childElement = indexToElement[bubbleUpIndex]
                 parentElement = indexToElement[parentIndex]
@@ -19,10 +21,13 @@ def find_top_k_frequent_element(nums, k):
                 bubbleUpIndex = parentIndex
                 parentIndex = (parentIndex - 1) / 2
         else:
+            print(str(value) + " not found, inserting")
             nums[currentIndex] = 1
             indexToElement[currentIndex] = value
             elementToIndex[value] = currentIndex
             currentIndex += 1
+        print(nums[:currentIndex])
+        print(indexToElement)
     a = []
     for i in xrange(k):
         a.append(indexToElement[i])
