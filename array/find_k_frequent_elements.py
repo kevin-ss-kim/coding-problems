@@ -29,8 +29,10 @@ def find_top_k_frequent_element(nums, k):
         print(nums[:currentIndex])
         print(indexToElement)
     a = []
-    for i in xrange(k):
-        a.append(indexToElement[i])
+    while k > 0:
+        # remove element, then bubble down
+        a.append(indexToElement[0])
+        currentIndex -= 1
     return a
 
 def main():
