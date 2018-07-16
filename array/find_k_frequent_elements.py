@@ -32,7 +32,10 @@ def find_top_k_frequent_element(nums, k):
     while k > 0:
         # remove element, then bubble down
         a.append(indexToElement[0])
+        nums[0] = nums[currentIndex]
         currentIndex -= 1
+        topIndex = 0
+        checkIndex = nums[1] > num[2] then 1 else 2
     return a
 
 def main():
