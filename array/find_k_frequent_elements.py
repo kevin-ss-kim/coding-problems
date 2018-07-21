@@ -8,18 +8,20 @@ def find_top_k_frequent_element(nums, k):
             if a[index + 1] is None:
                 a[index + 1] = [value]
             else:
-                a[index + 1] = a[index + 1].append(value)
+                a[index + 1].append(value)
             elementToIndex[value] = index + 1
         else:
             if a[1] is None:
                 a[1] = [value]
             else:
-                a[1] = a[1].append(value)
+                a[1].append(value)
             elementToIndex[value] = 1
     returnList = []
     currIndex = len(nums)
-    while k >= 0:
-        if a[currIndex] != None and a[currIndex] != []:
+    while k > 0:
+        if a[currIndex] is None or a[currIndex] == []:
+            currIndex -= 1
+        else:
             returnList.append(a[currIndex].pop())
             k -= 1
     return returnList
