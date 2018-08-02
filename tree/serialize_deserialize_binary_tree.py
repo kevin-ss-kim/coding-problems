@@ -12,25 +12,18 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        return self.serializeTree(root, '[')
-    
-    def serializeTree(self, root, s):
-        if root is None:
-            return s
-        queue = [root]
-        while len(queue) != 0:
-            element = queue.pop(0)
-            s += str(element.val) + ','
-            if element.left != None:
-                queue.append(element.left)
-            elif element.val != 'null':
-                queue.append(TreeNode('null'))
-            if element.right != None:
-                queue.append(element.right)
-            elif element.val != 'null':
-                queue.append(TreeNode('null'))
-        s = s[:-1] + ']'
-        return s
+        vals = []
+        def encode(node):
+            if node:
+                vals.append(str(node.val))
+                encode(node.left)
+                encode(node.right)
+            else:
+                vals.append('#')
+        
+        encode(root)
+        
+        return ' '.join(vals)
 
     def deserialize(self, data):
         """Decodes your encoded data to tree.
@@ -38,19 +31,18 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        data = data[1:]
-        data = data[:-1]
-        array = data.split(',')
-        print(array)
-        root = TreeNode(array[0])
-        self.deserializeArray(root, array, 0)
-        return root
-    
-    def deserializeArray(self, root, array, index):
-        if len(array) > index:
-            if array[index + 1] != 'null':
-                root.left = TreeNode(array[index + 1])
-                self.deserializeArray(root.left, array, index + 1)
-            if array[index + 2] != 'null':
-                root.right = TreeNode(array[index + 2])
-                self.deserializeArray(root.right, array, index + 2)
+        def decode(vals):
+            val = next(vals)
+            if val == '#':
+                return None
+            node = TreeNode(int(val))
+            node.left = decode(vals)
+            node.right = decode(vals)
+            return node
+        
+        vals = iter(data.split())
+        return decode(vals)
+
+if __name__ == '__main__':
+    array = input("Enter binary tree in array: ")
+    print(Codec.deserialize(Codec.serialize(array)))
