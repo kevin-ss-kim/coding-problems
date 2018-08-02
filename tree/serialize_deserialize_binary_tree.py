@@ -42,7 +42,4 @@ class Codec:
         
         vals = iter(data.split())
         return decode(vals)
-
-if __name__ == '__main__':
-    array = input("Enter binary tree in array: ")
-    print(Codec.deserialize(Codec.serialize(array)))
+        
