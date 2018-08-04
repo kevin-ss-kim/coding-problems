@@ -13,16 +13,17 @@ def first_missing_positive(nums):
                     nums[index] = nums[index + 1]
                     nums[index + 1] = temp
                 index -= 1
-    print(nums)
-    # Find where 1 starts. If not found, return 1
-    # If found, make sure that the next element is 2, the one after that is 3, etc.
-    # If not, return the number checked. If end of nums, return last element + 1
+    # Initialize number to check against to 1
+    # Loop through the array and find find the positive number
+    # If greater than the number checked against, return the checked number
+    # If not, increment the checked number if it is equal
+    # If end of nums, return last element + 1
     num = 1
     for i in xrange(len(nums)):
         if nums[i] > 0:
-            if nums[i] != num:
+            if nums[i] > num:
                 return num
-            else:
+            elif nums[i] == num:
                 num += 1
     return nums[len(nums) - 1] + 1
 
