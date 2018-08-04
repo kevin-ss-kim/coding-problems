@@ -17,9 +17,9 @@ def find_sum_of_two2(array, target):
         if sum == target:
             return True
         if sum < target:
-            left += 1
+            low += 1
         else:
-            right -= 1
+            high -= 1
     return False
 
 if __name__ == '__main__':
