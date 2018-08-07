@@ -10,3 +10,12 @@ def cons(a, b):
 
 Implement car and cdr.
 
+def car(a, b):
+    def first(a, b):
+        return a
+    return cons(a, b)(first)
+
+def cdr(a, b):
+    def last(a, b):
+        return b
+    return cons(a, b)(last)
