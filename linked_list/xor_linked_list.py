@@ -34,3 +34,17 @@ class XORLinkedList:
             self.tail.both ^= self.get_pointer(node)
             node.both = self.get_pointer(self.tail)
             self.tail = node
+
+    def get(self, index):
+        if index == 0 or self.head == None:
+            return self.head
+        node = self.head
+        nextNode = self.dereference_pointer(node.both)
+        while (index > 0):
+            # store nextNode address before jumping
+            nextNodeAddress = self.get_pointer(nextNode)
+            # jump nextNode to next
+            nextNode = self.dereference_pointer(nextNode.both ^ self.get_pointer(node))
+            # jump node to next
+            node = self.dereference_pointer(nextNodeAddress)
+        return node
