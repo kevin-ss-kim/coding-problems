@@ -14,8 +14,12 @@ For example, the following tree has 5 unival subtrees:
  1   1
  '''
 
-def count_unival(s):
-    return None
+def count_unival(tree):
+    return count_unival_length(0, tree, tree[0])
+
+# Count unival length with length greater than 1
+def count_unival_length(pos, tree):
+
  
 if __name__ == '__main__':
     array = input("Enter binary tree array: ")
