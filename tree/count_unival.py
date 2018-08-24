@@ -28,7 +28,7 @@ def count_unival_length(pos, tree, chain_pos):
     # Check if the pos is at least left grandchild of chain_pos
     if chain_pos >= 0 and chain_pos * 4 + 3 <= pos and tree[chain_pos] == tree[pos]:
         extra_value = 1
-        new_chain_pos = chain_pos
+        new_chain_pos = chain_poss
     left_unival_count = count_unival_length(2 * pos + 1, tree, new_chain_pos)
     right_unival_count = count_unival_length(2 * pos + 2, tree, new_chain_pos)
     return left_unival_count + right_unival_count + extra_value + match_parent
