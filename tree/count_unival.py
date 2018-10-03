@@ -14,28 +14,26 @@ For example, the following tree has 5 unival subtrees:
  1   1
  '''
 
+class TreeNode:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
-def count_unival(tree):
-    return count_unival_length(0, tree, -1)
+def count_unival(root):
+    count, _ = count_unival_helper(root)
+    return count
 
-def count_unival_length(pos, tree, chain_pos):
-    print("calling count_unival_length (%s, %s)" % (str(pos), str(chain_pos)))
-    if pos >= len(tree):
-        return 0
-    match_parent, extra_value, new_chain_pos = 0, 0, pos
-    if tree[pos] == tree[chain_pos]:
-        match_parent = 1
-    # Check if the pos is at least left grandchild of chain_pos
-    if chain_pos >= 0 and chain_pos * 4 + 3 <= pos and tree[chain_pos] == tree[pos]:
-        extra_value = 1
-        new_chain_pos = chain_poss
-    left_unival_count = count_unival_length(2 * pos + 1, tree, new_chain_pos)
-    right_unival_count = count_unival_length(2 * pos + 2, tree, new_chain_pos)
-    return left_unival_count + right_unival_count + extra_value + match_parent
-    
-# Define binary tree as array
-# Given a node at index n, the left and right child
-# are located at 2n + 1 and 2n + 2 respectively
-if __name__ == '__main__':
-    array = input("Enter binary tree array: ")
-    print(count_unival(array))
+def count_unival_helper(root):
+    if root is None:
+        return 0, True
+    left_count, is_left_unival = count_unival_helper(root.left)
+    right_count, is_right_unival = count_unival_helper(root.right)
+    total_count = left_count + right_count
+    if is_left_unival and is_right_unival:
+        if root.left is not None and root.value != root.left.value:
+            return total_count, False
+        if root.right is not None and root.value != root.right.value:
+            return total_count, False
+        return total_count + 1, True
+    return total_count, False
