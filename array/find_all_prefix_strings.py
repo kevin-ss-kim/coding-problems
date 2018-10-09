@@ -7,28 +7,48 @@ Hint: Try preprocessing the dictionary into a more efficient data structure to s
 '''
 class Trie():
 
-    def __init__(self):
-        self.root = None
-
-    def find(self, node, key):
-        for char in key:
-            if char in node.children:
-                node = node.children[char]
-            else:
-                return None
-        return node.value
-
-    # Traverse
-    def insert(self, root, string):
-        node = root
-
     class TrieNode():
         def __init__(self):
             self.children = {}
             self.value = None
 
+    def __init__(self):
+        self.root = self.TrieNode()
+
+    def find(self, root, key):
+        node = root
+        for char in key:
+            if char in node.children:
+                node = node.children[char]
+            else:
+                return None
+        return node
+
+    def insert(self, root, string):
+        node = root
+        for char in string:
+            if char in node.children:
+                node = node.children[char]
+            else:
+                newNode = self.TrieNode()
+                node.children[char] = newNode
+                node = newNode
+        node.value = string
+
 def find_all_prefix_strings(array, s):
     trie = convert_to_trie(array)
+    node = trie.find(trie.root, s)
+    return find_all_prefix_strings_recursive(node)
+
+def find_all_prefix_strings_recursive(node):
+    strings = []
+    if node.value != None:
+        strings.append(node.value)
+    for char in node.children:
+        strings_children = find_all_prefix_strings_recursive(node.children[char])
+        if len(strings_children) > 0:
+            strings += strings_children
+    return strings
 
 # Converts array of strings to a trie
 def convert_to_trie(array):
