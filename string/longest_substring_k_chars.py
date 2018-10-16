@@ -5,7 +5,17 @@ For example, given s = "abcba" and k = 2, the longest substring with k distinct 
 '''
 
 def longest_substring_k_chars(s, k):
-    return None
+    chars = set()
+    start, end, n = 0, 0, 0
+    while n < len(s):
+        if s[end] not in chars and len(chars) == k:
+            chars.remove(s[start])
+            start += 1
+        else:
+            chars.add(s[end])
+            end += 1
+        n += 1
+    return s[start:end]
 
 if __name__ == '__main__':
     s = input("Enter a string: ")
