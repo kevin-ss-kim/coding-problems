@@ -20,16 +20,22 @@ class HashTable:
             node = node.next
         return None
 
-    def put(key, value):
+    def put(self, key, value):
         index = hash(key) % len(self.table)
         newNode = LinkedListNode(key, value)
         if self.table[index] is None:
             self.table[index] = newNode
+            self.num_items += 1
         else:
             node = self.table[index]
             while node is not None:
+                # If key is already found, update value
+                if node.key == key:
+                    node.value = value
+                    return
                 node = node.next
             node.next = newNode
+            self.num_items += 1
 
 class LinkedListNode:
 
