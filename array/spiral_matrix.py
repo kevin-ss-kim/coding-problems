@@ -44,3 +44,6 @@ def spiral_matrix(matrix):
                 output.append(matrix[i][col_begin])
             col_begin += 1
     return output
+
+def spiral_matrix2(matrix):
+    return matrix and list(matrix.pop(0)) + spiral_matrix2(zip(*matrix)[::-1])
