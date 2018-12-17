@@ -12,6 +12,33 @@ Output: false
 Note: you can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0,1] is the same as [1,0] and thus will not appear together in edges.
 '''
 
+
+def is_valid_tree2(n, edges):
+    if n == 1: return edges == []
+    elif len(edges) + 1 == n:
+        visited = set()
+        adjacency_list = collections.defaultdict(list)
+        for edge in edges:
+            adjacency_list[edge[0]].append(edge[1])
+            adjacency_list[edge[1]].append(edge[0])
+        queue = [edges[0][0]]
+        search_from = None
+        while len(queue):
+            vertex = queue.pop(0)
+            visited.add(vertex)
+            for neighbor in adjacency_list[vertex]:
+                if neighbor in visited:
+                    if vertex in visited:
+                        continue
+                    elif search_from != neighbor:
+                        return False
+                else:
+                    queue.append(neighbor)
+            search_from = vertex
+        return len(visited) == n
+    return False
+
+
 def is_valid_tree(n, edges):
     if len(edges) + 1 == n:
         visited = list()
@@ -32,7 +59,6 @@ def is_valid_tree(n, edges):
                         return False
                     neighbors.append(vertex)
             visited += neighbors
-            print("visited after adding {}: {}".format(vertex1, visited))
             neighbors = []
             visited.append(vertex2)
             for i, edge in enumerate(edges):
@@ -47,6 +73,5 @@ def is_valid_tree(n, edges):
                         return False
                     neighbors.append(vertex)
             visited += neighbors
-            print("visited after adding {}: {}".format(vertex2, visited))
         return True
     return False
