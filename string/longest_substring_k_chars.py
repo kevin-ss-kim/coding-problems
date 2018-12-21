@@ -26,6 +26,17 @@ def longest_substring_k_chars(s, k):
             windowStart = start
     return s[windowStart:(windowStart + length)]
 
+def longest_substring_k_chars_2(s, k):
+    max_len, min_index, seen = 0, 0, {}
+    for i in range(len(s)):
+        seen[s[i]] = i
+        if len(seen) > k:
+            min_index = min(seen.values())
+            del seen[s[min_index]]
+            min_index += 1
+        max_len = max(max_len, i - min_index + 1)
+    return max_len
+
 if __name__ == '__main__':
     s = input("Enter a string: ")
     k = input("Enter k: ")
