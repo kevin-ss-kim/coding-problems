@@ -21,3 +21,34 @@ Output:
 "<b>aaabbc</b>c"
 
 '''
+
+def add_bold_tag(s, words):
+    if len(words) == 0: return s
+    interval = []
+    for string in words:
+        if string in words:
+            index = 0
+            
+        index = s.find(string)
+        if index > -1:
+            interval.append((index, index + len(string)))
+    boldString = ''
+    # merge string
+    if len(interval) == 0: return s
+    interval = sorted(interval)
+    merged_interval = [interval[0]]
+    for start, end in interval:
+        prev_start, prev_end = merged_interval[-1]
+        if prev_end >= start:
+            merged_interval[-1] = (prev_start, max(prev_end, end))
+        else:
+            merged_interval.append((start, end))
+    index = 0
+    for start, end in merged_interval:
+        if index < start:
+            boldString += s[index:start]
+        boldString += '<b>' + s[start:end] + '</b>'
+        index = end
+    if index < len(s):
+        boldString += s[index:]
+    return boldString
