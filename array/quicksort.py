@@ -6,7 +6,7 @@ def partition(array, low, high):
     array[high], array[pivot_index] = array[pivot_index], array[high]
     i = low - 1
     # Move pivot to the correct spot
-    for j in xrange(low, high):
+    for j in range(low, high):
         if array[j] <= pivot_value:
             i += 1
             array[i], array[j] = array[j], array[i]
